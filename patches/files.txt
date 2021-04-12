@@ -1,0 +1,4 @@
+Here are the patches for the bootloaders, SMC, and kernel/Hyper visor.
+
+The patches are compiled when you build your image, so you can edit/add to them.
+

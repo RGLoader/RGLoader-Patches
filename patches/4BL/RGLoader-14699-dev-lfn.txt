@@ -1,0 +1,59 @@
+# =================================================================================
+# watermark
+# =================================================================================
+.set watermark "RGLoader-dev. beta code."
+
+# =================================================================================
+# include the base file
+# =================================================================================
+.include "RGLoader-14699-dev-base.txt"
+
+# =================================================================================
+# patch loader
+# =================================================================================
+.code b 0x648
+                 #li        %r5, 0x5900      # patches are at 0x5900 in CD
+                 #oris      %r5, %r5, 0x400   # %r5 = address of CD and patches
+
+                 mfmsr     %r7              # get original machine state
+                 li        %r8, 0x10
+                 andc      %r8, %r7, %r8    # and machine state with 0x
+                 li        %r5, 0x200       # 0x0000_0000_0000_0200
+                 oris      %r5, %r5, 0x8000 # 0x0000_0000_8000_0200
+                 sldi      %r5, %r5, 32     # 0x8000_0200_0000_0000
+                 oris      %r5, %r5, 0xC80B # 0x8000_0200_C80B_0000
+                 ori       %r5, %r5, 0x8000  # 0x8000_0200_C80B_8004
+
+loadPatchSet:
+                 mtmsrd    %r8, 0           # set machine state, has to be done to read nand?
+                 isync
+                 lwz       %r4, 0(%r5)      # %r4 = address to patch
+                 lwz       %r3, 4(%r5)      # %r3 = number of patches
+                 addi      %r5, %r5, 8      # increment %r5 by 8
+                 cmpwi     cr6, %r4, -1     # compare %r4, if its -1 (FFFFFFFF) 
+                 beq       cr6, endPatches  # branch to end of patches
+                 mtspr     %CTR, %r3
+
+loadPatches:
+                 mtmsrd    %r8, 0
+                 isync
+                 lwz      %r3, 0(%r5)      # load instruction to patch
+                 mtmsrd    %r7, 0
+                 isync
+                 stw      %r3, 0(%r4)      # store instruction in %r4
+                 dcbst     %r0, %r4         # instruction cache stuff
+                 icbi      %r0, %r4
+                 sync
+                 isync
+                 addi      %r4, %r4, 4      # increment patch destination pointer
+                 addi      %r5, %r5, 4      # increment patch source pointer
+                 bdnz      loadPatches      # branch if we got more patches
+                 b         loadPatchSet     # otherwise load next patch set
+
+endPatches:
+                 lis       %r3, 0x28 # '('  # do what we patched originally
+.eoc
+
+# =================================================================================
+# need to leave this next line blank for our patchsets
+# =================================================================================

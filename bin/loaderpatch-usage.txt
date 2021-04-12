@@ -1,0 +1,42 @@
+loaderpatch, by stoker25 for RGLoader
+
+commands:
+
+.patch <name> <ver>
+=sets the patch targets name and version, should be first thing in a script
+
+
+.extend 0x<length>
+=extends the target to the length specified. make sure length is in hex and starts with 0x
+
+
+.set <variable> "<text>"
+=sets variable value to specified text
+
+
+.string <variable>
+=outputs the variable to the end of the target file
+
+
+.string "<text>"
+=outputs the text to the end of the target file
+
+
+.data 0x<offset>
+<hex data>
+.eod
+= writes hex data to specified offset, make sure offset is in hex and starts with 0x
+
+
+.code <options> 0x<offset>
+<ppc assembly code>
+.eoc
+= compiles code and will do a few things depending on options:
+b will write the code to the end of the target file, append a branch back to offset + 4 and set offset to a branch to this code
+bl will write the code to end of the target file, append a blr to the end of it (don't include this in your code!) and set offset to a branch w/ link register to this code
+no options will just write the code to specified offset, overwriting data
+(i think i only implemented the b option, but others will be done in future)
+
+
+.include "<filepath>"
+= includes the specified file into the current patch

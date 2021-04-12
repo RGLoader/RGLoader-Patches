@@ -1,0 +1,2 @@
+@ECHO OFF
+rgbuild -ui

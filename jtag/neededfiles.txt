@@ -1,0 +1,3 @@
+freeboot.bin  (freeboot binary for jtag rebooter)
+fuses.bin  (virtual fuse file)
+jtag_payload.bin  (payload for jtag exploit)

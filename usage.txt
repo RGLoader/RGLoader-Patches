@@ -1,0 +1,7 @@
+Copy the contents of hdd-filesystems to "Filesystems" folder on the hard drive.
+
+Copy bootanim.wmv and rgloader.ini to the root of the hard drive.
+
+Read the README of rgbuild.
+
+

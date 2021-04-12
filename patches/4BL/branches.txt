@@ -1,0 +1,4 @@
+base - base patches for CD
+dev - loads in retail HV (not needed anymore!)
+lfcd - loads patches from cd
+lfn - loads patches from nand

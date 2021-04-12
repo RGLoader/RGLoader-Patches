@@ -1,0 +1,21 @@
+
+Put the 14699 SE image, called SE.14699.bin inside the loaders\5BL folder
+Hex edit the first letter to a 'C' (to make 'CE' instead of 'SE')
+
+You will need all the files below in the filesystems\14699-dev folder
+
+Get these from a DEVKIT nand:
+bootanim.xex
+dashboard.xbx
+xapi.xex
+xlaunch.strings
+xshell.xex
+xstudio.xex
+
+You will also need these from your RETAIL nand:
+crl.bin
+dae.bin
+extended.bin (+ .meta)
+secdata.bin (+ .meta)
+
+CD.8453_falcon.bin is required for all phat xboxes using 8453.

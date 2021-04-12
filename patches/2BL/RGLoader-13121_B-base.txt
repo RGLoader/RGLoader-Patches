@@ -1,0 +1,29 @@
+.patch CB 9188
+
+# =================================================================================
+# remove 4BL hash check
+# (bl XeCryptMemDiff -> li r3, 0
+# =================================================================================
+.data 0x59A0
+38 60 00 00
+.eod
+
+
+#Nop smc hash check
+.data 0x5240
+60 00 00 00
+.eod
+
+#Remove fuse checks
+.data 0x5048
+48 00 01 68
+.eod
+
+#Remove checks on CD
+.data 0x58AC
+60 00 00 00
+.eod
+
+
+
+

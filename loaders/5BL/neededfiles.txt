@@ -1,0 +1,8 @@
+You need to extract the SE (lzx compressed kernel) from a devkit nand image.
+
+Open the SE in a hex editor and change the first character to a 'C' (to make CE).
+
+Needed files in this folder:
+
+SE.14699.bin        (for 14699 images)
+SE.13599.bin        (for 13599 images)
